@@ -1,0 +1,15 @@
+{
+  "name": "img2threejs",
+  "displayName": "img2threejs",
+  "version": "1.5.0",
+  "description": "Turn an object or character reference image into a quality-gated, animation-ready procedural Three.js model built in code. Reconstruction-by-code, not photogrammetry or mesh extraction.",
+  "author": {
+    "name": "img2threejs contributors",
+    "url": "https://github.com/img2threejs/img2threejs"
+  },
+  "homepage": "https://github.com/img2threejs/img2threejs",
+  "repository": "https://github.com/img2threejs/img2threejs",
+  "license": "Apache-2.0",
+  "keywords": ["three.js", "3d", "image-to-3d", "procedural-generation", "webgl"],
+  "skills": "./skills/"
+}

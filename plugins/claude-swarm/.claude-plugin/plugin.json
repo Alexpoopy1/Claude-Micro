@@ -1,0 +1,16 @@
+{
+  "name": "claude-swarm",
+  "displayName": "Claude Swarm",
+  "version": "0.2.0",
+  "description": "Multi-agent orchestration for Claude Code — decompose complex tasks into parallel subtasks, coordinate agents in real time, and visualize everything in a rich terminal UI.",
+  "author": {
+    "name": "Affaan Mustafa",
+    "url": "https://github.com/affaan-m/claude-swarm"
+  },
+  "homepage": "https://github.com/affaan-m/claude-swarm",
+  "repository": "https://github.com/affaan-m/claude-swarm",
+  "license": "MIT",
+  "keywords": ["multi-agent", "orchestration", "claude-agent-sdk", "swarm", "parallel-tasks"],
+  "skills": "./skills/",
+  "commands": ["./commands/"]
+}

@@ -1,0 +1,39 @@
+{
+  "name": "claude-micro",
+  "owner": {
+    "name": "alexpoopy1",
+    "url": "https://github.com/alexpoopy1/claude-micro"
+  },
+  "plugins": [
+    {
+      "name": "img2threejs",
+      "source": "./plugins/img2threejs",
+      "description": "Turn an object or character reference image into a quality-gated, animation-ready procedural Three.js model built in code. Staged sculpting pipeline with an AI-vision self-correction loop.",
+      "version": "1.5.0",
+      "author": {
+        "name": "img2threejs contributors",
+        "url": "https://github.com/img2threejs/img2threejs"
+      },
+      "homepage": "https://github.com/img2threejs/img2threejs",
+      "repository": "https://github.com/img2threejs/img2threejs",
+      "license": "Apache-2.0",
+      "category": "3d-graphics",
+      "keywords": ["three.js", "3d", "image-to-3d", "procedural-generation", "webgl"]
+    },
+    {
+      "name": "claude-swarm",
+      "source": "./plugins/claude-swarm",
+      "description": "Multi-agent orchestration for Claude Code — decompose complex tasks into parallel subtasks, coordinate agents in real time with file-conflict detection and budget enforcement, and review results with an Opus quality gate.",
+      "version": "0.2.0",
+      "author": {
+        "name": "Affaan Mustafa",
+        "url": "https://github.com/affaan-m/claude-swarm"
+      },
+      "homepage": "https://github.com/affaan-m/claude-swarm",
+      "repository": "https://github.com/affaan-m/claude-swarm",
+      "license": "MIT",
+      "category": "agent-orchestration",
+      "keywords": ["multi-agent", "orchestration", "claude-agent-sdk", "swarm", "parallel-tasks"]
+    }
+  ]
+}
