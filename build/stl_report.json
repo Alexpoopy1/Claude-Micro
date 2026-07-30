@@ -7,15 +7,15 @@
       "material": "PETG or ABS",
       "orientation": "As modelled, flat on the plate. No supports.",
       "notes": "Tray, USB-C doorway, PCB standoffs, screw counterbores.",
-      "triangles": 4700,
-      "volume_mm3": 36702.45,
-      "volume_cm3": 36.702,
+      "triangles": 4652,
+      "volume_mm3": 52907.73,
+      "volume_cm3": 52.908,
       "bbox_mm": [
-        134.0,
-        94.0,
-        11.0
+        165.0,
+        108.0,
+        13.6
       ],
-      "bytes": 235084,
+      "bytes": 232684,
       "watertight": true,
       "manifold": true,
       "oriented": true,
@@ -28,15 +28,15 @@
       "material": "PETG or ABS",
       "orientation": "Rotate 180 deg about X so the plate face is down. No supports.",
       "notes": "Bezel + integrated 1.3 mm switch plate + raised Claude mark.",
-      "triangles": 7572,
-      "volume_mm3": 28830.17,
-      "volume_cm3": 28.83,
+      "triangles": 7284,
+      "volume_mm3": 45304.89,
+      "volume_cm3": 45.305,
       "bbox_mm": [
-        134.0,
-        94.0,
-        6.8
+        165.0,
+        108.0,
+        9.35
       ],
-      "bytes": 378684,
+      "bytes": 364284,
       "watertight": true,
       "manifold": true,
       "oriented": true,
@@ -49,15 +49,15 @@
       "material": "Natural / clear ABS / PLA",
       "orientation": "Upside down (open side up). No supports.",
       "notes": "1.0 mm roof so the RGB status colour reads through.",
-      "triangles": 256,
-      "volume_mm3": 624.63,
-      "volume_cm3": 0.625,
+      "triangles": 500,
+      "volume_mm3": 1019.96,
+      "volume_cm3": 1.02,
       "bbox_mm": [
-        17.5,
-        16.5,
-        5.6
+        18.0,
+        18.0,
+        8.5
       ],
-      "bytes": 12884,
+      "bytes": 25084,
       "watertight": true,
       "manifold": true,
       "oriented": true,
@@ -70,15 +70,15 @@
       "material": "ABS / PLA",
       "orientation": "Upside down (open side up). No supports.",
       "notes": "Opaque command caps.",
-      "triangles": 256,
-      "volume_mm3": 692.47,
-      "volume_cm3": 0.692,
+      "triangles": 500,
+      "volume_mm3": 1117.28,
+      "volume_cm3": 1.117,
       "bbox_mm": [
-        17.5,
-        16.5,
-        5.6
+        18.0,
+        18.0,
+        8.5
       ],
-      "bytes": 12884,
+      "bytes": 25084,
       "watertight": true,
       "manifold": true,
       "oriented": true,
@@ -92,12 +92,12 @@
       "orientation": "Bore down on the plate. No supports.",
       "notes": "D-bore press fit onto the EC11 shaft.",
       "triangles": 1738,
-      "volume_mm3": 7162.25,
-      "volume_cm3": 7.162,
+      "volume_mm3": 7640.13,
+      "volume_cm3": 7.64,
       "bbox_mm": [
         26.0,
         26.0,
-        15.0
+        16.0
       ],
       "bytes": 86984,
       "watertight": true,
@@ -176,12 +176,12 @@
       "orientation": "Flat. No supports.",
       "notes": "Touch-strip light guide; capacitive sensing reads through it.",
       "triangles": 216,
-      "volume_mm3": 1687.34,
-      "volume_cm3": 1.687,
+      "volume_mm3": 1909.39,
+      "volume_cm3": 1.909,
       "bbox_mm": [
-        110.8,
+        115.8,
         8.4,
-        2.1
+        2.3
       ],
       "bytes": 10884,
       "watertight": true,
@@ -196,9 +196,9 @@
   "totals": {
     "printable_parts": 9,
     "pieces_to_print": 22,
-    "triangles": 16634,
-    "solid_volume_cm3": 90.27,
-    "estimated_filament_g": 61.6,
-    "assembly_triangles": 23786
+    "triangles": 16786,
+    "solid_volume_cm3": 129.0,
+    "estimated_filament_g": 88.0,
+    "assembly_triangles": 28026
   }
 }

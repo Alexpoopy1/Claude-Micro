@@ -1,7 +1,7 @@
 # Claude Micro
 
-A 13-key low-profile agent macropad: six frosted status keys, seven command
-keys, a rotary reasoning dial, a planar joystick, a five-pad capacitive touch
+A 13-key agent macropad on clear MX switches: six frosted status keys, seven
+command keys, a rotary reasoning dial, a planar joystick, a five-pad capacitive touch
 strip and a 19-LED RGB chain. Fully printable, fully routed, fully checked.
 
 Design study of the [Work Louder × OpenAI Codex Micro][codex] — same feature
@@ -26,7 +26,7 @@ above, so the deployed page is always generated fresh from
 | Output | Where | What it is |
 | --- | --- | --- |
 | **Interactive viewer** | `build/claude-micro.html` | One self-contained file: WebGL model with an exploded-view slider, PCB layer viewer, schematic, BOM, print guide, firmware reference and the full check report. No network, no CDN. |
-| **Printable parts** | `build/stl/*.stl` | 9 parts, 22 pieces, ~62 g of filament. Every one proven watertight before it is written. |
+| **Printable parts** | `build/stl/*.stl` | 9 parts, 22 pieces, ~88 g of filament. Every one proven watertight before it is written. |
 | **PCB** | `build/pcb/claude-micro.kicad_pcb` | Open in KiCad 7/8. Placed, routed, poured, zoned. Also `.kicad_sch`, `.kicad_pro`, `.net`. |
 | **EasyEDA schematic** | `build/pcb/claude-micro-easyeda.json` | `make easyeda`. Opens in EasyEDA (File → Open → EasyEDA) and imports into EasyEDA Pro via File → Import → EasyEDA Standard — for publishing to OSHWLab or ordering through JLCPCB. |
 | **Fabrication** | `build/pcb/gerbers/` | RS-274X gerbers for all nine layers plus separate plated and non-plated Excellon drill files. Upload as-is. |
@@ -38,14 +38,14 @@ above, so the deployed page is always generated fresh from
 
 |  |  |
 | --- | --- |
-| Keys | 13 × Kailh Choc v1 on an 18 × 17 mm grid — 6 agent, 7 command |
+| Keys | 13 × clear-housing MX switches, 5-pin PCB mount, on a 19.05 mm grid — 6 agent, 7 command |
 | Dial | EC11E rotary encoder with push, on a 26 mm knurled knob |
 | Joystick | 20 mm 2-axis analog thumbstick into ADC0/ADC1, click on its own pin |
 | Touch | 5-pad strip read by RC charge time — no touch controller |
 | RGB | 19 × SK6812 (13 per-key + 6 underglow), 5 V through a 74LVC1G17 buffer |
 | MCU | RP2040 module, Raspberry Pi Pico form factor (USB-C variant recommended) |
-| Board | 128 × 88 mm, 2 layer, 1.6 mm, 0.2 mm rules |
-| Case | 134 × 94 × 16.4 mm printed two-piece, 6° tilt feet |
+| Board | 159 × 102 mm, 2 layer, 1.6 mm, 0.2 mm rules |
+| Case | 165 × 108 × 19.5 mm printed two-piece, 6° tilt feet |
 
 ### Agent keys
 
@@ -91,7 +91,7 @@ tools/  device.py       loader + derived layout (LED chain, matrix nodes, pads)
         build_stl.py    printable parts → binary STL
         build_html.py   the single-file viewer
         build_firmware.py  QMK descriptors
-tests/  test_all.py     34 checks across geometry, layout, circuit and board
+tests/  test_all.py     36 checks across geometry, layout, circuit and board
 ```
 
 No third-party packages. Python 3.11 standard library only.
@@ -119,7 +119,7 @@ the fixer and the checker cannot drift apart.
 
 ## Verification
 
-`make test` runs 34 checks:
+`make test` runs 36 checks:
 
 * **Geometry** — kernel invariants, analytic volume checks, a fuzz pass over
   random hole patterns, and every printable part proven watertight, manifold,
@@ -149,12 +149,15 @@ meshes watertight.**
 
 1. **Print** at 0.2 mm, 3 walls, 25% infill. No supports on any part. Print the
    six agent keycaps in natural or clear filament — the roof is 1.0 mm so the
-   status colour reads through.
+   status colour reads through. All 13 caps take a standard MX cross stem, so
+   bought keycaps drop straight in if you would rather not print them.
 2. **Order the PCB** — upload `build/pcb/gerbers/` as a zip. Nothing exotic:
    2 layer, 1.6 mm, 0.2 mm track and clearance.
 3. **Populate** — bottom side first (diodes, 0603s, the SOT-23-5, then the
-   RP2040 module on a 2.54 mm header), then the top (LEDs, switches, encoder,
-   thumbstick).
+   RP2040 module on a 2.54 mm header), then the top: the 19 SK6812s, then the
+   13 MX switches, the EC11 and the thumbstick. Seat every switch fully — the
+   two locating posts must bottom out before you solder, or the plate will not
+   sit flat.
 4. **Flash** — `qmk compile -kb claude_micro -km default`, hold BOOTSEL, copy
    the UF2 across.
 5. **Assemble** — six M2 heat-set inserts in the bezel, drop the diffuser into

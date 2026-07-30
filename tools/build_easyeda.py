@@ -51,6 +51,9 @@ ELEC_UNDEFINED, ELEC_IN, ELEC_OUT, ELEC_BIDIR, ELEC_POWER = 0, 1, 2, 3, 4
 
 POWER_NETS = {"GND", "+5V", "+3V3", "VBUS"}
 
+# Matches what EasyEDA 6.5 writes into its own exports.
+EDITOR_VERSION = "6.5.57"
+
 
 def _clean(s) -> str:
     """Strip the characters EasyEDA uses as delimiters."""
@@ -212,7 +215,7 @@ def build(verbose: bool = True) -> str:
     data_str = {
         "head": {
             "docType": "1",
-            "editorVersion": "6.5.36",
+            "editorVersion": EDITOR_VERSION,
             "c_para": {"Prefix Start": "1"},
             "c_spiceCmd": "null",
             "x": "0",
@@ -225,17 +228,22 @@ def build(verbose: bool = True) -> str:
         "shape": sheet.shapes,
         "BBox": {"x": x0, "y": y0,
                  "width": max(sheet.xs) - x0, "height": max(sheet.ys) - y0},
-        "colors": [],
+        "colors": {},
     }
+    # Project wrapper as EasyEDA 6.5 writes it: docType is a *string*, colors is
+    # an object, and editorVersion sits at the top level.
     doc = {
+        "editorVersion": EDITOR_VERSION,
+        "docType": "5",
+        "title": cfg["meta"]["name"],
+        "description": cfg["meta"]["description"],
+        "colors": {},
         "schematics": [{
-            "docType": 1,
+            "docType": "1",
             "title": f"{cfg['meta']['name']} schematic",
+            "description": "",
             "dataStr": data_str,
         }],
-        "docType": 5,
-        "title": cfg["meta"]["name"],
-        "name": cfg["meta"]["name"],
     }
 
     out = os.path.join(ensure_build("pcb"), f"{cfg['meta']['slug']}-easyeda.json")

@@ -103,8 +103,8 @@ def case_bottom(cfg: dict) -> M.Mesh:
 
     # Anti-flex ribs across the floor, kept clear of the standoffs and of the
     # USB-C receptacle hanging under the board.
-    for x in (2.0, 92.0):
-        m.extend(M.box_at(x, 28.0, floor_top - 0.1, 2.0, 68.0, 1.4))
+    for x in (45.0, 100.0):
+        m.extend(M.box_at(x, 32.5, floor_top - 0.1, 2.0, 75.0, 1.4))
 
     m.name = "case_bottom"
     return m
@@ -158,22 +158,24 @@ def case_top(cfg: dict) -> M.Mesh:
 
 
 def keycap(cfg: dict, agent: bool = False) -> M.Mesh:
-    """Choc-compatible low-profile keycap, printed upside down.
+    """MX-compatible keycap, printed upside down.
 
-    The agent variant has a thinner roof so a printed-in-natural-filament cap
-    diffuses the status LED underneath it.
+    The agent variant has a thinner roof so a cap printed in natural or clear
+    filament diffuses the status LED underneath it.
     """
     kc = cfg["layout"]["keycap"]
     h = kc["h"]
     wall = kc["wall"]
     roof = 1.0 if agent else kc["top_inset"]
     seg = 6
-    r = 1.6
+    r = 1.5
+    taper = 3.5           # how much the cap narrows from skirt to top face
 
     out_b = M.rounded_rect(0, 0, kc["w"], kc["d"], r, seg)
-    out_t = M.rounded_rect(0, 0, kc["w"] - 1.9, kc["d"] - 1.9, r, seg)
-    in_b = M.rounded_rect(0, 0, kc["w"] - 2 * wall, kc["d"] - 2 * wall, max(0.4, r - wall), seg)
-    in_t = M.rounded_rect(0, 0, kc["w"] - 1.9 - 2 * wall, kc["d"] - 1.9 - 2 * wall,
+    out_t = M.rounded_rect(0, 0, kc["w"] - taper, kc["d"] - taper, r, seg)
+    in_b = M.rounded_rect(0, 0, kc["w"] - 2 * wall, kc["d"] - 2 * wall,
+                          max(0.4, r - wall), seg)
+    in_t = M.rounded_rect(0, 0, kc["w"] - taper - 2 * wall, kc["d"] - taper - 2 * wall,
                           max(0.4, r - wall), seg)
 
     m = M.Mesh(name="keycap_agent" if agent else "keycap_command")
@@ -181,12 +183,10 @@ def keycap(cfg: dict, agent: bool = False) -> M.Mesh:
     m.extend(M.loft(in_b, 0.0, in_t, h - roof, cap_bottom=False, cap_top=True).flip())
     m.extend(M.ring_between(out_b, in_b, 0.0, up=False))
 
-    # Two Choc stem posts, joined to the roof so they print as one body.
-    sp, sw, sd = kc["stem_pitch_x"], kc["stem_w"], kc["stem_d"]
-    for sx in (-sp / 2.0, sp / 2.0):
-        m.extend(M.box_at(sx, 0.0, 0.0, sw, sd, h - roof + 0.02))
-    # A rib tying the posts together stiffens the print without fouling the switch.
-    m.extend(M.box_at(0.0, 0.0, kc["stem_h"], sp, 1.6, h - roof - kc["stem_h"] + 0.02))
+    # The MX socket: a boss reaching the roof with a cross-shaped bore through
+    # it, sized a hair over the stem so it presses on without splitting.
+    m.extend(M.extrude(M.circle(0, 0, kc["socket_d"], 32), 0.0, h - roof + 0.02,
+                       holes=[M.cross(0, 0, kc["socket_arm"], kc["socket_thick"])]))
     return m
 
 
@@ -268,15 +268,27 @@ def pcb(cfg: dict) -> M.Mesh:
     return M.extrude(pcb_poly(cfg), st["pcb_bottom"], st["pcb_top"], holes=holes, name="pcb")
 
 
-def choc_switch(cfg: dict, x: float = 0.0, y: float = 0.0) -> M.Mesh:
+def mx_switch(cfg: dict, x: float = 0.0, y: float = 0.0) -> M.Mesh:
+    """Clear MX-style switch: wide bottom housing under the plate, a 14 mm
+    waist through the plate cutout, a tapered top housing, and the cross stem."""
     sw = cfg["layout"]["switch"]
     st = cfg["stack"]
     z = st["pcb_top"]
     m = M.Mesh(name="switch")
-    m.extend(M.extrude(M.rounded_rect(x, y, sw["body_w"], sw["body_d"], 0.8, 4), z, z + 2.2))
-    m.extend(M.extrude(M.rounded_rect(x, y, 13.7, 13.7, 0.6, 4), z + 2.2, z + sw["body_h"]))
-    # Choc stem: cross-bar with two slots the keycap posts grip.
-    m.extend(M.box_at(x, y, z + sw["body_h"] - 0.05, 10.4, 4.6, sw["stem_h"]))
+    # bottom housing, too wide to pass through the plate
+    m.extend(M.extrude(M.rounded_rect(x, y, sw["body_w"], sw["body_d"], 0.8, 4),
+                       z, st["plate_bottom"]))
+    # waist through the plate cutout
+    m.extend(M.extrude(M.rounded_rect(x, y, sw["upper_w"], sw["upper_w"], 0.6, 4),
+                       st["plate_bottom"] - 0.05, st["plate_top"]))
+    # top housing, tapering the way an MX does
+    m.extend(M.loft(M.rounded_rect(x, y, sw["upper_w"], sw["upper_w"], 0.6, 4),
+                    st["plate_top"] - 0.05,
+                    M.rounded_rect(x, y, sw["top_w"], sw["top_w"], 0.6, 4),
+                    z + sw["body_h"]))
+    # cross stem
+    m.extend(M.extrude(M.cross(x, y, sw["stem_arm"], sw["stem_thick"]),
+                       z + sw["body_h"] - 0.5, z + sw["body_h"] + sw["stem_h"]))
     return m
 
 
@@ -300,7 +312,8 @@ def joystick_body(cfg: dict) -> M.Mesh:
     m.extend(M.extrude(M.rounded_rect(joy["x"], joy["y"], joy["body_w"], joy["body_d"], 1.5, 5),
                        z, z + 6.5))
     m.extend(M.cone(joy["x"], joy["y"], z + 6.5, 13.0, 8.0, 3.0, 32))
-    m.extend(M.cylinder(joy["x"], joy["y"], z + 9.4, 4.0, st["joy_cap_bottom"] - z - 9.0, 24))
+    m.extend(M.cylinder(joy["x"], joy["y"], z + 9.4, 4.0,
+                        st["joy_cap_bottom"] + 6.0 - (z + 9.4), 24))
     return m
 
 
@@ -397,32 +410,33 @@ def assembly(cfg: dict) -> list[dict]:
 
     sw = M.Mesh(name="switches")
     for k in lay["keys"]:
-        sw.extend(choc_switch(cfg, k["x"], k["y"]))
-    add("Choc switches (13)", sw, col["switch"], (0, 0, 30), "switches")
+        sw.extend(mx_switch(cfg, k["x"], k["y"]))
+    # Clear housings, so they render translucent.
+    add("MX switches (13)", sw, col["switch"], (0, 0, 34), "switches", opacity=0.45)
 
     add("Rotary encoder", encoder_body(cfg), "#8d939c", (0, 0, 26), "switches")
     add("Joystick module", joystick_body(cfg), "#8d939c", (0, 0, 26), "switches")
 
-    add("Case top + plate", case_top(cfg), col["case_top"], (0, 0, 46), "case")
-    add("Diffuser", diffuser(cfg).translate(dz=st["plate_bottom"]), col["diffuser"], (0, 0, 52),
+    add("Case top + plate", case_top(cfg), col["case_top"], (0, 0, 52), "case")
+    add("Diffuser", diffuser(cfg).translate(dz=st["plate_bottom"]), col["diffuser"], (0, 0, 58),
         "case", opacity=0.6)
 
     agent = M.Mesh()
     for k in agent_keys(cfg):
         agent.extend(keycap(cfg, agent=True).translate(k["x"], k["y"], st["keycap_bottom"]))
-    add("Agent keycaps (6)", agent, col["keycap_agent"], (0, 0, 66), "keycaps")
+    add("Agent keycaps (6)", agent, col["keycap_agent"], (0, 0, 74), "keycaps")
 
     cmd = M.Mesh()
     for k in command_keys(cfg):
         cmd.extend(keycap(cfg, agent=False).translate(k["x"], k["y"], st["keycap_bottom"]))
-    add("Command keycaps (7)", cmd, col["keycap_command"], (0, 0, 66), "keycaps")
+    add("Command keycaps (7)", cmd, col["keycap_command"], (0, 0, 74), "keycaps")
 
     add("Reasoning dial", knob(cfg).translate(lay["encoder"]["x"], lay["encoder"]["y"],
                                               st["knob_bottom"]),
-        col["knob"], (0, 0, 74), "keycaps")
+        col["knob"], (0, 0, 84), "keycaps")
     add("Joystick cap", joystick_cap(cfg).translate(lay["joystick"]["x"], lay["joystick"]["y"],
                                                     st["joy_cap_bottom"]),
-        col["joystick"], (0, 0, 74), "keycaps")
+        col["joystick"], (0, 0, 84), "keycaps")
 
     f = cfg["case"]["foot"]
     feet = M.Mesh()

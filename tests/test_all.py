@@ -212,7 +212,7 @@ def test_plate_openings_clear_their_hardware():
     cut = CFG["layout"]["switch"]["plate_cutout"]
     body = CFG["layout"]["switch"]["body_w"]
     assert cut < body, "switch cutout is larger than the switch body flange"
-    assert cut > 13.5, "switch cutout is too small for a Choc"
+    assert cut >= 13.8, "switch cutout is too small for the switch to clip into"
     holes = parts.plate_cutouts(CFG)
     boxes = [M.poly_bbox(h) for h in holes]
     for i, a in enumerate(boxes):
@@ -245,7 +245,8 @@ def test_netlist_erc_is_clean():
 def test_every_key_has_a_switch_and_a_diode():
     net = circuit.build_netlist(CFG)
     comps = {c["ref"]: c for c in net["components"]}
-    switches = [c for c in net["components"] if c["footprint"] == "Choc_v1"]
+    sw_fp = CFG["layout"]["switch"]["footprint"]
+    switches = [c for c in net["components"] if c["footprint"] == sw_fp]
     diodes = [c for c in net["components"] if c["value"] == "1N4148W"]
     assert len(switches) == 13
     assert len(diodes) == len(CFG["matrix"]["nodes"]) == 14
@@ -395,7 +396,7 @@ def test_courtyards_do_not_overlap_on_the_same_side():
 
     def allowed(a, bb):
         pair = {a["fp"], bb["fp"]}
-        if pair == {"Choc_v1", "SK6812MINI"}:
+        if pair == {c["layout"]["switch"]["footprint"], "SK6812MINI"}:
             return True     # LED inside the switch's light window
         if "RP2040_Module_Pico" in pair:
             other = bb if a["fp"] == "RP2040_Module_Pico" else a
@@ -528,10 +529,24 @@ def test_easyeda_export_is_well_formed():
     path = build_easyeda.build(verbose=False)
     doc = json.load(open(path))
 
-    assert doc["docType"] == 5 and len(doc["schematics"]) == 1
-    data = doc["schematics"][0]["dataStr"]
+    # EasyEDA 6.5 writes docType as a string and colors as an object; a number
+    # or a list here is the older 4.x shape and will not round-trip.
+    assert set(doc) == {"editorVersion", "docType", "title", "description",
+                        "colors", "schematics"}
+    assert doc["docType"] == "5", "project docType must be the string \"5\""
+    assert isinstance(doc["colors"], dict)
+    assert doc["editorVersion"].startswith("6.")
+    assert len(doc["schematics"]) == 1
+
+    sheet = doc["schematics"][0]
+    assert set(sheet) == {"docType", "title", "description", "dataStr"}
+    assert sheet["docType"] == "1", "sheet docType must be the string \"1\""
+
+    data = sheet["dataStr"]
     assert set(data) >= {"head", "canvas", "shape", "BBox", "colors"}
+    assert isinstance(data["colors"], dict)
     assert data["head"]["docType"] == "1"
+    assert data["head"]["editorVersion"] == doc["editorVersion"]
     assert data["canvas"].startswith("CA~")
     assert len(data["canvas"].split("~")) == 15
 

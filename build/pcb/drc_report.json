@@ -27,7 +27,7 @@
     {
       "severity": "info",
       "check": "drc.hole_spacing",
-      "message": "229 holes all clear of one another"
+      "message": "260 holes all clear of one another"
     },
     {
       "severity": "info",
@@ -42,12 +42,12 @@
     {
       "severity": "info",
       "check": "drc.pour",
-      "message": "all 59 GND pads reach one continuous pour (41 stitching vias)"
+      "message": "all 59 GND pads reach one continuous pour (64 stitching vias)"
     },
     {
       "severity": "info",
       "check": "fit.knob",
-      "message": "0.30 mm of clearance at the bottom of the knob bore"
+      "message": "0.60 mm of clearance at the bottom of the knob bore"
     },
     {
       "severity": "info",

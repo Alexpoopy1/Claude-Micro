@@ -51,7 +51,7 @@ FOOTPRINTS: dict[str, dict] = {}
 PART_HEIGHT = {
     "R_0603": 0.5, "C_0603": 0.5, "C_0805": 0.7, "F_1206": 0.9,
     "D_SOD123": 0.9, "C_1210_BULK": 2.5, "SOT-23-5": 1.1,
-    "SK6812MINI": 1.4, "SK6812_3535": 1.4, "Choc_v1": 5.0,
+    "SK6812MINI": 1.4, "SK6812_3535": 1.4, "MX_PCB": 11.6,
     "EC11E": 6.5, "Joystick_20mm": 12.0, "SW_Push_6mm": 4.3,
     "RP2040_Module_Pico": 4.0,
 }
@@ -81,21 +81,20 @@ _reg({
     "outline": _rect_outline(2.9, 1.6), "courtyard": (3.6, 3.6),
 })
 
-# Kailh Choc v1 (PG1350), solder-in. Two switch terminals plus the centre boss
-# and the two alignment posts.
+# MX-compatible switch, 5-pin PCB mount: two contacts, the centre boss and the
+# two locating posts. Both contacts sit on the south half, which leaves the
+# north half clear for the per-key LED inside the switch's light window.
 _reg({
-    "name": "Choc_v1", "kind": "tht",
-    # Terminals sit on the south side of the switch; the north half is left
-    # clear for the per-key LED inside the Choc light window.
-    "pads": [pad(1, 0.0, 5.9, 3.0, 3.0, "circle", "tht", 1.2),
-             pad(2, 5.0, 3.8, 3.0, 3.0, "circle", "tht", 1.2)],
-    "npth": [{"x": 0.0, "y": 0.0, "d": 3.45},
-             {"x": -5.5, "y": 0.0, "d": 1.9},
-             {"x": 5.5, "y": 0.0, "d": 1.9}],
-    "outline": _rect_outline(13.8, 13.8), "courtyard": (14.6, 14.6),
+    "name": "MX_PCB", "kind": "tht",
+    "pads": [pad(1, -3.81, 2.54, 2.5, 2.5, "circle", "tht", 1.5),
+             pad(2, 2.54, 5.08, 2.5, 2.5, "circle", "tht", 1.5)],
+    "npth": [{"x": 0.0, "y": 0.0, "d": 4.0},
+             {"x": -5.08, "y": 0.0, "d": 1.7},
+             {"x": 5.08, "y": 0.0, "d": 1.7}],
+    "outline": _rect_outline(14.0, 14.0), "courtyard": (15.8, 15.8),
 })
 
-# SK6812MINI, top mount, sits inside the Choc LED window.
+# SK6812MINI, top mount, sits inside the switch's LED window.
 _reg({
     "name": "SK6812MINI", "kind": "smd",
     "pads": [pad(1, -1.65, 1.0, 1.1, 0.9, name="VDD"),
@@ -213,10 +212,11 @@ def build_netlist(cfg: dict | None = None) -> dict:
         r, c = node["row"], node["col"]
         knet = f"K_{node['id']}"
         if node["kind"] == "switch":
-            C(f"SW{i + 1}", "Kailh Choc v1", "Choc_v1", node["x"], node["y"], 0, "top",
+            C(f"SW{i + 1}", "MX clear", "MX_PCB", node["x"], node["y"], 0, "top",
               {"1": f"COL{c}", "2": knet},
-              mpn="PG1350 (Choc v1)", desc=f"Key {node['id']}", group="matrix")
-            dx, dy = node["x"] - 5.6, node["y"] - 5.2
+              mpn="MX-compatible, clear housing, 5-pin",
+              desc=f"Key {node['id']}", group="matrix")
+            dx, dy = node["x"] - 6.5, node["y"] - 5.5
         else:
             # The encoder push lives in the matrix too; keep its diode clear of
             # the EC11 body and its mounting lugs.
@@ -227,7 +227,7 @@ def build_netlist(cfg: dict | None = None) -> dict:
 
     # ---- RGB chain ------------------------------------------------------
     chain = cfg["rgb"]["chain"]
-    C("R10", "470R", "R_0603", 24.0, 63.0, 0, "bottom",
+    C("R10", "470R", "R_0603", 24.0, 74.0, 0, "bottom",
       {"1": "LED_DIN_5V", "2": "LED_DIN"}, desc="Data line series damping", group="rgb")
     prev = "LED_DIN"
     for i, led in enumerate(chain):
@@ -238,30 +238,30 @@ def build_netlist(cfg: dict | None = None) -> dict:
           {"1": V5, "2": nxt, "3": GND, "4": prev},
           mpn=led["part"], desc=("Per-key status RGB" if led["kind"] == "perkey"
                                  else "Underglow RGB"), group="rgb")
-        cap_x, cap_y = ((led["x"] + 4.8, led["y"] - 0.5) if led["kind"] == "perkey"
+        cap_x, cap_y = ((led["x"] + 5.5, led["y"] - 0.45) if led["kind"] == "perkey"
                         else (led["x"], led["y"] + 3.4))
         C(f"C{i + 1}", "100nF", "C_0603", cap_x, cap_y, 0, "bottom",
           {"1": V5, "2": GND}, desc=f"Decoupling for {led['id']}", group="rgb")
         prev = nxt
 
     # ---- 5 V level shifter for the LED data line ------------------------
-    C("U2", "74LVC1G17", "SOT-23-5", 29.5, 63.0, 0, "bottom",
+    C("U2", "74LVC1G17", "SOT-23-5", 30.0, 74.0, 0, "bottom",
       {"1": "LED_DIN_3V3", "2": GND, "4": "LED_DIN_5V", "5": V5},
       mpn="SN74LVC1G17DBVR", desc="Schmitt buffer, 3V3 -> 5V for SK6812 data",
       group="power")
-    C("C20", "100nF", "C_0603", 34.0, 63.0, 0, "bottom",
+    C("C20", "100nF", "C_0603", 35.5, 74.0, 0, "bottom",
       {"1": V5, "2": GND}, desc="U2 decoupling", group="power")
 
     # ---- power ----------------------------------------------------------
-    C("F1", "1.1A PPTC", "F_1206", 2.0, 63.0, 0, "bottom",
+    C("F1", "1.1A PPTC", "F_1206", 0.0, 74.0, 0, "bottom",
       {"1": VBUS, "2": V5}, mpn="MF-MSMF110", desc="Resettable fuse on the 5 V rail",
       group="power")
-    C("C21", "470uF 10V", "C_1210_BULK", 8.5, 63.0, 0, "bottom",
+    C("C21", "470uF 10V", "C_1210_BULK", 7.0, 74.0, 0, "bottom",
       {"1": V5, "2": GND}, mpn="Low-ESR bulk", desc="LED rail bulk capacitance",
       group="power")
-    C("C22", "10uF", "C_0805", 14.0, 63.0, 0, "bottom",
+    C("C22", "10uF", "C_0805", 13.0, 74.0, 0, "bottom",
       {"1": V5, "2": GND}, desc="5 V ceramic bulk", group="power")
-    C("C23", "10uF", "C_0805", 19.0, 63.0, 0, "bottom",
+    C("C23", "10uF", "C_0805", 18.5, 74.0, 0, "bottom",
       {"1": V33, "2": GND}, desc="3V3 bulk", group="power")
 
     # ---- rotary encoder --------------------------------------------------
@@ -303,7 +303,7 @@ def build_netlist(cfg: dict | None = None) -> dict:
           desc=f"RC touch drive resistor, pad {i}", group="touch")
 
     # ---- reset -----------------------------------------------------------
-    C("SW_RST", "Reset", "SW_Push_6mm", -8.0, 63.0, 0, "bottom",
+    C("SW_RST", "Reset", "SW_Push_6mm", -10.0, 74.0, 0, "bottom",
       {"1": "RESET", "2": "RESET", "3": GND, "4": GND},
       desc="Pulls RUN low", group="mcu")
 

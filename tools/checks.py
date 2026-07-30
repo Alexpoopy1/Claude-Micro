@@ -67,7 +67,8 @@ def erc(board: dict, net: dict, cfg: dict) -> list[dict]:
                f"{knet} should join exactly one switch terminal to one diode", net=knet)
 
     diodes = [c for c in board["components"] if c["value"] == "1N4148W"]
-    switches = [c for c in board["components"] if c["footprint"] == "Choc_v1"]
+    sw_fp = cfg["layout"]["switch"]["footprint"]
+    switches = [c for c in board["components"] if c["footprint"] == sw_fp]
     if len(diodes) != len(cfg["matrix"]["nodes"]):
         _f(out, ERROR, "erc.diode_count",
            f"{len(diodes)} diodes for {len(cfg['matrix']['nodes'])} matrix nodes")

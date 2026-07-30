@@ -5,73 +5,78 @@
     "slug": "claude-micro",
     "version": "1.0.0",
     "vendor": "Open Hardware",
-    "description": "13-key low-profile agent macropad with rotary reasoning dial, planar joystick, capacitive touch strip and 19-LED RGB chain.",
+    "description": "13-key agent macropad with rotary reasoning dial, planar joystick, capacitive touch strip and 19-LED RGB chain.",
     "usb": { "vid": "0xC1A0", "pid": "0x0001", "manufacturer": "Claude Micro", "product": "Claude Micro" },
     "inspiration": "Layout and feature parity study of the Work Louder x OpenAI Codex Micro (13 switches, 1 encoder, 1 planar joystick, 1 touch sensor, 6 frosted agent keys)."
   },
 
   "layout": {
-    "pitch_x": 18.0,
-    "pitch_y": 17.0,
+    "pitch_x": 19.05,
+    "pitch_y": 19.05,
     "switch": {
-      "type": "kailh_choc_v1",
-      "plate_cutout": 13.85,
-      "body_w": 15.0,
-      "body_d": 15.0,
-      "body_h": 5.0,
-      "stem_h": 3.0,
-      "travel": 3.0,
-      "plate_thickness": 1.3,
-      "top_of_plate_above_pcb": 2.2
+      "type": "mx_clear",
+      "footprint": "MX_PCB",
+      "$note": "Clear-housing MX-compatible switch, 5-pin PCB mount. Cross stem, so any MX keycap fits.",
+      "plate_cutout": 14.0,
+      "body_w": 15.6,
+      "body_d": 15.6,
+      "body_h": 11.6,
+      "upper_w": 14.0,
+      "top_w": 12.4,
+      "stem_h": 3.6,
+      "stem_arm": 4.1,
+      "stem_thick": 1.35,
+      "travel": 4.0,
+      "plate_thickness": 1.5,
+      "top_of_plate_above_pcb": 5.0
     },
     "keycap": {
-      "w": 17.5,
-      "d": 16.5,
-      "h": 5.6,
-      "top_inset": 1.4,
-      "wall": 1.2,
-      "stem_pitch_x": 5.7,
-      "stem_w": 1.25,
-      "stem_d": 3.0,
-      "stem_h": 2.8
+      "w": 18.0,
+      "d": 18.0,
+      "h": 8.5,
+      "top_inset": 1.6,
+      "wall": 1.5,
+      "socket_d": 5.6,
+      "socket_arm": 4.25,
+      "socket_thick": 1.45
     },
 
     "keys": [
-      { "id": "A1", "x":  0.0, "y":  0.0, "group": "agent", "matrix": [0, 0], "legend": "AGENT 1", "fn": "Focus / raise thread 1" },
-      { "id": "A2", "x": 18.0, "y":  0.0, "group": "agent", "matrix": [0, 1], "legend": "AGENT 2", "fn": "Focus / raise thread 2" },
-      { "id": "A3", "x": 36.0, "y":  0.0, "group": "agent", "matrix": [0, 2], "legend": "AGENT 3", "fn": "Focus / raise thread 3" },
-      { "id": "A4", "x": 54.0, "y":  0.0, "group": "agent", "matrix": [0, 3], "legend": "AGENT 4", "fn": "Focus / raise thread 4" },
-      { "id": "A5", "x": 72.0, "y":  0.0, "group": "agent", "matrix": [1, 0], "legend": "AGENT 5", "fn": "Focus / raise thread 5" },
-      { "id": "A6", "x": 90.0, "y":  0.0, "group": "agent", "matrix": [1, 1], "legend": "AGENT 6", "fn": "Focus / raise thread 6" },
+      { "id": "A1", "x": 0, "y": 0, "group": "agent", "matrix": [0, 0], "legend": "AGENT 1", "fn": "Focus / raise thread 1" },
+      { "id": "A2", "x": 19.05, "y": 0, "group": "agent", "matrix": [0, 1], "legend": "AGENT 2", "fn": "Focus / raise thread 2" },
+      { "id": "A3", "x": 38.1, "y": 0, "group": "agent", "matrix": [0, 2], "legend": "AGENT 3", "fn": "Focus / raise thread 3" },
+      { "id": "A4", "x": 57.15, "y": 0, "group": "agent", "matrix": [0, 3], "legend": "AGENT 4", "fn": "Focus / raise thread 4" },
+      { "id": "A5", "x": 76.2, "y": 0, "group": "agent", "matrix": [1, 0], "legend": "AGENT 5", "fn": "Focus / raise thread 5" },
+      { "id": "A6", "x": 95.25, "y": 0, "group": "agent", "matrix": [1, 1], "legend": "AGENT 6", "fn": "Focus / raise thread 6" },
 
-      { "id": "K1", "x":  0.0, "y": 17.0, "group": "command", "matrix": [1, 2], "legend": "NEW",    "fn": "New thread" },
-      { "id": "K2", "x": 18.0, "y": 17.0, "group": "command", "matrix": [1, 3], "legend": "RUN",    "fn": "Run / send" },
-      { "id": "K3", "x": 36.0, "y": 17.0, "group": "command", "matrix": [2, 0], "legend": "STOP",   "fn": "Interrupt agent" },
-      { "id": "K4", "x": 54.0, "y": 17.0, "group": "command", "matrix": [2, 1], "legend": "DIFF",   "fn": "Show diff" },
+      { "id": "K1", "x": 0, "y": 19.05, "group": "command", "matrix": [1, 2], "legend": "NEW",    "fn": "New thread" },
+      { "id": "K2", "x": 19.05, "y": 19.05, "group": "command", "matrix": [1, 3], "legend": "RUN",    "fn": "Run / send" },
+      { "id": "K3", "x": 38.1, "y": 19.05, "group": "command", "matrix": [2, 0], "legend": "STOP",   "fn": "Interrupt agent" },
+      { "id": "K4", "x": 57.15, "y": 19.05, "group": "command", "matrix": [2, 1], "legend": "DIFF",   "fn": "Show diff" },
 
-      { "id": "K5", "x":  0.0, "y": 34.0, "group": "command", "matrix": [2, 2], "legend": "PLAN",   "fn": "Toggle plan mode" },
-      { "id": "K6", "x": 18.0, "y": 34.0, "group": "command", "matrix": [2, 3], "legend": "TEST",   "fn": "Run tests" },
-      { "id": "K7", "x": 36.0, "y": 34.0, "group": "command", "matrix": [3, 0], "legend": "LAYER",  "fn": "Cycle layer" }
+      { "id": "K5", "x": 0, "y": 38.1, "group": "command", "matrix": [2, 2], "legend": "PLAN",   "fn": "Toggle plan mode" },
+      { "id": "K6", "x": 19.05, "y": 38.1, "group": "command", "matrix": [2, 3], "legend": "TEST",   "fn": "Run tests" },
+      { "id": "K7", "x": 38.1, "y": 38.1, "group": "command", "matrix": [3, 0], "legend": "LAYER",  "fn": "Cycle layer" }
     ],
 
     "encoder": {
       "id": "ENC1",
-      "x": 90.0, "y": 25.5,
+      "x": 120.0, "y": 28.5,
       "type": "EC11E",
       "detents": 20,
       "pulses_per_rev": 20,
       "shaft_d": 6.0,
       "shaft_flat": 4.5,
-      "shaft_len": 9.0,
+      "shaft_len": 12.5,
       "body_w": 12.0, "body_d": 12.0, "body_h": 6.5,
-      "knob_d": 26.0, "knob_h": 15.0,
+      "knob_d": 26.0, "knob_h": 16.0,
       "switch_matrix": [3, 1],
       "fn": "Reasoning effort: low -> medium -> high -> max"
     },
 
     "joystick": {
       "id": "JS1",
-      "x": 63.0, "y": 38.0,
+      "x": 78.0, "y": 44.0,
       "type": "planar_2axis_analog",
       "body_w": 20.0, "body_d": 20.0, "body_h": 12.0,
       "cap_d": 20.0, "cap_h": 8.0,
@@ -82,7 +87,7 @@
 
     "touch_strip": {
       "id": "TS1",
-      "x0": -9.0, "y0": 50.5, "x1": 99.0, "y1": 56.5,
+      "x0": -9.0, "y0": 60.0, "x1": 104.0, "y1": 66.0,
       "pads": 5,
       "pad_gap": 1.2,
       "sense": "RC charge-time on GP16..GP20 driven through 1 MOhm from GP21",
@@ -90,17 +95,17 @@
     },
 
     "logo": {
-      "x": 45.0, "y": 61.5,
-      "size": 8.0,
+      "x": 47.0, "y": 72.0,
+      "size": 9.0,
       "emboss": 0.6,
       "mark": "claude_burst"
     }
   },
 
   "rgb": {
-    "per_key": { "count": 13, "part": "SK6812MINI-E", "mount": "reverse", "offset_y": 4.7 },
+    "per_key": { "count": 13, "part": "SK6812MINI-E", "mount": "top", "offset_y": 5.05 },
     "underglow": { "count": 6, "part": "SK6812-3535", "positions": [
-      [-11.0, 8.5], [ 33.0, -10.5], [ 96.0, 46.0], [ 96.0, 8.5], [ 12.0, 45.0], [ 63.0, 63.5]
+      [-13.0, 9.0], [ 47.0, -12.0], [128.0, 9.0], [128.0, 52.0], [ 14.0, 52.0], [100.0, 72.0]
     ]},
     "total": 19,
     "max_current_ma_per_led": 60,
@@ -127,8 +132,8 @@
     "part": "RP2040 module, Raspberry Pi Pico form factor (40-pin castellated)",
     "compatible": ["Raspberry Pi Pico", "Pico H", "RP2040-Plus", "YD-RP2040 (USB-C)", "Pico clone w/ USB-C"],
     "recommended": "USB-C variant (YD-RP2040 / RP2040-Plus) so the finished unit has a USB-C port",
-    "x": 17.34, "y": 9.5, "rot": 0, "side": "bottom",
-    "$placement": "Pin columns land at x=8.45 and x=26.23, in the clear gutters between key columns, so the module's through-holes miss every top-side pad.",
+    "x": 18.14, "y": 8.5, "rot": 0, "side": "bottom",
+    "$placement": "Pin columns land at x=9.25 and x=27.03, in the clear gutters between key columns, so the module's through-holes miss every top-side pad.",
     "body_w": 21.0, "body_l": 51.0, "body_h": 4.0,
     "mount": "2.54 mm pin header, component side facing away from the carrier",
     "standoff": 2.5, "pcb_thickness": 1.0, "component_height": 2.6,
@@ -160,7 +165,7 @@
   },
 
   "pcb": {
-    "x0": -17.0, "y0": -16.0, "x1": 111.0, "y1": 72.0,
+    "x0": -18.0, "y0": -17.0, "x1": 141.0, "y1": 85.0,
     "corner_radius": 4.0,
     "thickness": 1.6,
     "layers": 2,
@@ -169,14 +174,14 @@
     "soldermask": "black",
     "silkscreen": "white",
     "mount_holes": [
-      { "x": -13.8, "y": -13.4, "d": 2.6 },
-      { "x":  47.0, "y": -13.4, "d": 2.6 },
-      { "x": 107.8, "y": -13.4, "d": 2.6 },
-      { "x": -13.8, "y":  68.8, "d": 2.6 },
-      { "x":  47.0, "y":  68.8, "d": 2.6 },
-      { "x": 107.8, "y":  68.8, "d": 2.6 }
+      { "x": -14.2, "y": -13.8, "d": 2.6 },
+      { "x":  61.0, "y": -13.8, "d": 2.6 },
+      { "x": 137.2, "y": -13.8, "d": 2.6 },
+      { "x": -14.2, "y":  81.5, "d": 2.6 },
+      { "x":  61.0, "y":  81.5, "d": 2.6 },
+      { "x": 137.2, "y":  81.5, "d": 2.6 }
     ],
-    "usb": { "x": 17.34, "y": -16.0, "edge": "back", "width": 9.5, "note": "Aligned with the USB connector on the RP2040 module." },
+    "usb": { "x": 18.14, "y": -17.0, "edge": "back", "width": 9.5, "note": "Aligned with the USB connector on the RP2040 module." },
     "design_rules": {
       "min_track": 0.2,
       "min_clearance": 0.2,
@@ -196,24 +201,24 @@
     "component_clearance_top": 8.5,
     "pcb_bottom": 8.5,
     "pcb_top": 10.1,
-    "plate_bottom": 11.0,
-    "plate_top": 12.3,
-    "switch_top": 15.1,
-    "keycap_bottom": 15.4,
-    "keycap_top": 21.0,
-    "bezel_top": 16.4,
-    "knob_bottom": 13.1,
-    "knob_top": 28.1,
-    "joy_cap_bottom": 20.3,
-    "joy_cap_top": 28.3
+    "plate_bottom": 13.6,
+    "plate_top": 15.1,
+    "switch_top": 21.7,
+    "keycap_bottom": 21.1,
+    "keycap_top": 29.6,
+    "bezel_top": 19.5,
+    "knob_bottom": 15.9,
+    "knob_top": 31.9,
+    "joy_cap_bottom": 21.5,
+    "joy_cap_top": 29.5
   },
 
   "case": {
     "wall": 2.4,
     "floor": 2.0,
     "pcb_gap": 0.35,
-    "outer": { "x0": -20.0, "y0": -19.0, "x1": 114.0, "y1": 75.0 },
-    "window": { "x0": -9.8, "y0": -9.8, "x1": 104.8, "y1": 66.5, "radius": 3.0 },
+    "outer": { "x0": -21.0, "y0": -20.0, "x1": 144.0, "y1": 88.0 },
+    "window": { "x0": -10.5, "y0": -10.5, "x1": 134.0, "y1": 78.0, "radius": 3.0 },
     "bottom_cavity_h": 8.0,
     "bezel_h": 6.4,
     "top_lip": 1.6,
@@ -244,7 +249,7 @@
     "knob": "#d97757",
     "joystick": "#c8ccd4",
     "diffuser": "#f2efe9",
-    "switch": "#e0e0e0",
+    "switch": "#dfe7f0",
     "switch_stem": "#d97757",
     "accent": "#d97757"
   },

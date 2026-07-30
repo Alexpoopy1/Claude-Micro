@@ -158,6 +158,18 @@ def circle(cx: float, cy: float, d: float, seg: int = 48) -> list[Pt2]:
             for i in range(seg)]
 
 
+def cross(cx: float, cy: float, arm: float, thick: float) -> list[Pt2]:
+    """A plus sign: `arm` is the full span of each axis, `thick` the bar width.
+
+    Used for the MX switch stem and, slightly oversized, for the socket in the
+    keycap that receives it.
+    """
+    a, t = arm / 2.0, thick / 2.0
+    return [(cx + t, cy + t), (cx + a, cy + t), (cx + a, cy - t), (cx + t, cy - t),
+            (cx + t, cy - a), (cx - t, cy - a), (cx - t, cy - t), (cx - a, cy - t),
+            (cx - a, cy + t), (cx - t, cy + t), (cx - t, cy + a), (cx + t, cy + a)]
+
+
 def fluted_circle(cx: float, cy: float, d: float, flutes: int = 40, depth: float = 0.45,
                   per_flute: int = 4) -> list[Pt2]:
     """A circle with a scalloped edge -- the knurl on the reasoning dial."""

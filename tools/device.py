@@ -28,7 +28,7 @@ def _derive(cfg: dict) -> None:
     lay = cfg["layout"]
     keys = lay["keys"]
 
-    # Per-key RGB sits just north of the switch centre, inside the Choc window.
+    # Per-key RGB sits just north of the switch centre, in its light window.
     for k in keys:
         k["led"] = [k["x"], k["y"] - cfg["rgb"]["per_key"]["offset_y"]]
 
