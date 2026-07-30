@@ -15,6 +15,12 @@ make            # build everything, then verify it
 open build/claude-micro.html
 ```
 
+Deploying to Vercel serves the same file: `vercel.json` runs the STL, PCB and
+HTML build steps and publishes `build/` as the site, with `/` rewritten to
+`claude-micro.html`. No framework, no Node build — just the Python tooling
+above, so the deployed page is always generated fresh from
+`config/device.json` rather than a stale checked-in copy.
+
 ## What you get
 
 | Output | Where | What it is |

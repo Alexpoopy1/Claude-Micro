@@ -1,0 +1,13 @@
+{
+  "buildCommand": "python3 tools/build_stl.py && python3 tools/build_pcb.py && python3 tools/build_html.py",
+  "outputDirectory": "build",
+  "rewrites": [
+    { "source": "/", "destination": "/claude-micro.html" }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)\\.(stl|gbr|drl|kicad_pcb|kicad_sch|kicad_pro|net)",
+      "headers": [{ "key": "Content-Disposition", "value": "attachment" }]
+    }
+  ]
+}
