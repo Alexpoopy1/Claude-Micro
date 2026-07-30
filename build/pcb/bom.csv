@@ -1,0 +1,19 @@
+Qty,Value,Footprint,MPN / Notes,References,Description,Group
+22,100nF,C_0603,-,C1 C10 C11 C12 C13 C14 C15 C16 C17 C18 C19 C2 C20 C24 C25 C3 C4 C5 C6 C7 C8 C9,Encoder B debounce,input
+14,1N4148W,D_SOD123,1N4148W SOD-123,D1 D10 D11 D12 D13 D14 D2 D3 D4 D5 D6 D7 D8 D9,Matrix diode for ENC_SW,matrix
+13,Kailh Choc v1,Choc_v1,PG1350 (Choc v1),SW1 SW10 SW11 SW12 SW13 SW2 SW3 SW4 SW5 SW6 SW7 SW8 SW9,Key K7,matrix
+13,SK6812MINI-E,SK6812MINI,SK6812MINI-E,LED1 LED10 LED11 LED12 LED13 LED2 LED3 LED4 LED5 LED6 LED7 LED8 LED9,Per-key status RGB,rgb
+6,SK6812-3535,SK6812_3535,SK6812-3535,LED14 LED15 LED16 LED17 LED18 LED19,Underglow RGB,rgb
+5,1M,R_0603,-,R5 R6 R7 R8 R9,"RC touch drive resistor, pad 4",touch
+2,10uF,C_0805,-,C22 C23,3V3 bulk,power
+2,10k,R_0603,-,R1 R2,Encoder B pull-up,input
+2,1k,R_0603,-,R3 R4,Joystick Y RC filter,input
+2,10nF,C_0603,-,C26 C27,Joystick Y filter cap,input
+1,RP2040 Pico-form-factor module,RP2040_Module_Pico,YD-RP2040 / RP2040-Plus / Raspberry Pi Pico,MOD1,RP2040 + 2-16 MB flash + USB + 3V3 regulator,mcu
+1,470R,R_0603,-,R10,Data line series damping,rgb
+1,74LVC1G17,SOT-23-5,SN74LVC1G17DBVR,U2,"Schmitt buffer, 3V3 -> 5V for SK6812 data",power
+1,1.1A PPTC,F_1206,MF-MSMF110,F1,Resettable fuse on the 5 V rail,power
+1,470uF 10V,C_1210_BULK,Low-ESR bulk,C21,LED rail bulk capacitance,power
+1,EC11E + switch,EC11E,EC11E15244Ax (9 mm shaft),ENC1,Reasoning-effort dial,input
+1,2-axis analog thumbstick,Joystick_20mm,"20 mm planar thumbstick, 10k pots",JS1,Skill launcher,input
+1,Reset,SW_Push_6mm,-,SW_RST,Pulls RUN low,mcu

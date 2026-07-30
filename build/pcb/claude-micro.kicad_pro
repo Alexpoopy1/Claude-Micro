@@ -1,0 +1,34 @@
+{
+  "board": {
+    "design_settings": {
+      "rules": {
+        "min_clearance": 0.2,
+        "min_track_width": 0.2,
+        "min_through_hole_diameter": 0.3,
+        "min_via_annular_width": 0.13,
+        "min_hole_to_hole": 0.5
+      }
+    }
+  },
+  "meta": {
+    "filename": "claude-micro.kicad_pro",
+    "version": 1
+  },
+  "net_settings": {
+    "classes": [
+      {
+        "name": "Default",
+        "clearance": 0.2,
+        "track_width": 0.25,
+        "via_diameter": 0.7,
+        "via_drill": 0.35
+      }
+    ]
+  },
+  "sheets": [
+    [
+      "00000000-0000-0000-0000-000000000000",
+      "Root"
+    ]
+  ]
+}

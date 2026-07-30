@@ -1,0 +1,63 @@
+{
+  "ok": true,
+  "summary": "0 errors, 0 warnings, 11 notes",
+  "errors": 0,
+  "warnings": 0,
+  "findings": [
+    {
+      "severity": "info",
+      "check": "erc.led_chain",
+      "message": "LED chain intact across 19 devices"
+    },
+    {
+      "severity": "info",
+      "check": "erc.current",
+      "message": "19 LEDs, 1140 mA if every channel were full-on; firmware caps the chain at 420 mA and the PPTC opens at 1.1 A"
+    },
+    {
+      "severity": "info",
+      "check": "drc.unrouted",
+      "message": "all 141 connections routed"
+    },
+    {
+      "severity": "info",
+      "check": "drc.annular",
+      "message": "via annular ring 0.175 mm"
+    },
+    {
+      "severity": "info",
+      "check": "drc.hole_spacing",
+      "message": "229 holes all clear of one another"
+    },
+    {
+      "severity": "info",
+      "check": "drc.clearance",
+      "message": "copper clearance >= 0.2 mm everywhere"
+    },
+    {
+      "severity": "info",
+      "check": "drc.edge",
+      "message": "all copper inside the board profile"
+    },
+    {
+      "severity": "info",
+      "check": "drc.pour",
+      "message": "all 59 GND pads reach one continuous pour (41 stitching vias)"
+    },
+    {
+      "severity": "info",
+      "check": "fit.knob",
+      "message": "0.30 mm of clearance at the bottom of the knob bore"
+    },
+    {
+      "severity": "info",
+      "check": "fit.cavity",
+      "message": "6.50 mm under the board; the module stack needs 6.10 mm"
+    },
+    {
+      "severity": "info",
+      "check": "fit.pcb",
+      "message": "PCB clears the cavity by 0.50 / 0.50 mm"
+    }
+  ]
+}

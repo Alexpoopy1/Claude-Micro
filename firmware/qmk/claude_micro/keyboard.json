@@ -1,0 +1,358 @@
+{
+  "manufacturer": "Claude Micro",
+  "keyboard_name": "Claude Micro",
+  "maintainer": "claude-micro",
+  "processor": "RP2040",
+  "bootloader": "rp2040",
+  "board": "GENERIC_RP_RP2040",
+  "usb": {
+    "vid": "0xC1A0",
+    "pid": "0x0001",
+    "device_version": "1.0.0"
+  },
+  "diode_direction": "COL2ROW",
+  "matrix_pins": {
+    "rows": [
+      "GP2",
+      "GP3",
+      "GP4",
+      "GP5"
+    ],
+    "cols": [
+      "GP6",
+      "GP7",
+      "GP8",
+      "GP9"
+    ]
+  },
+  "encoder": {
+    "rotary": [
+      {
+        "pin_a": "GP10",
+        "pin_b": "GP11",
+        "resolution": 4
+      }
+    ]
+  },
+  "ws2812": {
+    "pin": "GP12",
+    "driver": "vendor"
+  },
+  "rgb_matrix": {
+    "driver": "ws2812",
+    "led_count": 19,
+    "max_brightness": 160,
+    "sleep": true,
+    "animations": {
+      "solid_color": true,
+      "breathing": true,
+      "cycle_left_right": true,
+      "solid_reactive_simple": true
+    },
+    "layout": [
+      {
+        "x": 40,
+        "y": 8,
+        "flags": 4,
+        "matrix": [
+          0,
+          0
+        ]
+      },
+      {
+        "x": 76,
+        "y": 8,
+        "flags": 4,
+        "matrix": [
+          0,
+          1
+        ]
+      },
+      {
+        "x": 112,
+        "y": 8,
+        "flags": 4,
+        "matrix": [
+          0,
+          2
+        ]
+      },
+      {
+        "x": 148,
+        "y": 8,
+        "flags": 4,
+        "matrix": [
+          0,
+          3
+        ]
+      },
+      {
+        "x": 184,
+        "y": 8,
+        "flags": 4,
+        "matrix": [
+          1,
+          0
+        ]
+      },
+      {
+        "x": 220,
+        "y": 8,
+        "flags": 4,
+        "matrix": [
+          1,
+          1
+        ]
+      },
+      {
+        "x": 148,
+        "y": 23,
+        "flags": 4,
+        "matrix": [
+          1,
+          2
+        ]
+      },
+      {
+        "x": 112,
+        "y": 23,
+        "flags": 4,
+        "matrix": [
+          1,
+          3
+        ]
+      },
+      {
+        "x": 76,
+        "y": 23,
+        "flags": 4,
+        "matrix": [
+          2,
+          0
+        ]
+      },
+      {
+        "x": 40,
+        "y": 23,
+        "flags": 4,
+        "matrix": [
+          2,
+          1
+        ]
+      },
+      {
+        "x": 40,
+        "y": 38,
+        "flags": 4,
+        "matrix": [
+          2,
+          2
+        ]
+      },
+      {
+        "x": 76,
+        "y": 38,
+        "flags": 4,
+        "matrix": [
+          2,
+          3
+        ]
+      },
+      {
+        "x": 112,
+        "y": 38,
+        "flags": 4,
+        "matrix": [
+          3,
+          0
+        ]
+      },
+      {
+        "x": 18,
+        "y": 20,
+        "flags": 2,
+        "matrix": [
+          3,
+          1
+        ]
+      },
+      {
+        "x": 106,
+        "y": 3,
+        "flags": 2
+      },
+      {
+        "x": 224,
+        "y": 53,
+        "flags": 2
+      },
+      {
+        "x": 224,
+        "y": 20,
+        "flags": 2
+      },
+      {
+        "x": 64,
+        "y": 52,
+        "flags": 2
+      },
+      {
+        "x": 166,
+        "y": 64,
+        "flags": 2
+      }
+    ]
+  },
+  "features": {
+    "bootmagic": true,
+    "extrakey": true,
+    "nkro": true,
+    "console": true,
+    "command": false,
+    "mousekey": false,
+    "encoder": true,
+    "rgb_matrix": true,
+    "raw": true
+  },
+  "layouts": {
+    "LAYOUT": {
+      "layout": [
+        {
+          "matrix": [
+            0,
+            0
+          ],
+          "x": 0.0,
+          "y": 0.0,
+          "label": "A1"
+        },
+        {
+          "matrix": [
+            0,
+            1
+          ],
+          "x": 1.0,
+          "y": 0.0,
+          "label": "A2"
+        },
+        {
+          "matrix": [
+            0,
+            2
+          ],
+          "x": 2.0,
+          "y": 0.0,
+          "label": "A3"
+        },
+        {
+          "matrix": [
+            0,
+            3
+          ],
+          "x": 3.0,
+          "y": 0.0,
+          "label": "A4"
+        },
+        {
+          "matrix": [
+            1,
+            0
+          ],
+          "x": 4.0,
+          "y": 0.0,
+          "label": "A5"
+        },
+        {
+          "matrix": [
+            1,
+            1
+          ],
+          "x": 5.0,
+          "y": 0.0,
+          "label": "A6"
+        },
+        {
+          "matrix": [
+            1,
+            2
+          ],
+          "x": 0.0,
+          "y": 1.0,
+          "label": "K1"
+        },
+        {
+          "matrix": [
+            1,
+            3
+          ],
+          "x": 1.0,
+          "y": 1.0,
+          "label": "K2"
+        },
+        {
+          "matrix": [
+            2,
+            0
+          ],
+          "x": 2.0,
+          "y": 1.0,
+          "label": "K3"
+        },
+        {
+          "matrix": [
+            2,
+            1
+          ],
+          "x": 3.0,
+          "y": 1.0,
+          "label": "K4"
+        },
+        {
+          "matrix": [
+            2,
+            2
+          ],
+          "x": 0.0,
+          "y": 2.0,
+          "label": "K5"
+        },
+        {
+          "matrix": [
+            2,
+            3
+          ],
+          "x": 1.0,
+          "y": 2.0,
+          "label": "K6"
+        },
+        {
+          "matrix": [
+            3,
+            0
+          ],
+          "x": 2.0,
+          "y": 2.0,
+          "label": "K7"
+        },
+        {
+          "matrix": [
+            3,
+            1
+          ],
+          "x": 5.0,
+          "y": 1.5,
+          "label": "ENC_SW"
+        },
+        {
+          "matrix": [
+            3,
+            3
+          ],
+          "x": 3.5,
+          "y": 2.3,
+          "label": "JOY_SW"
+        }
+      ]
+    }
+  }
+}

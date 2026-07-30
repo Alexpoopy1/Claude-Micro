@@ -1,0 +1,204 @@
+{
+  "parts": [
+    {
+      "name": "case_bottom",
+      "file": "stl/case_bottom.stl",
+      "qty": 1,
+      "material": "PETG or ABS",
+      "orientation": "As modelled, flat on the plate. No supports.",
+      "notes": "Tray, USB-C doorway, PCB standoffs, screw counterbores.",
+      "triangles": 4700,
+      "volume_mm3": 36702.45,
+      "volume_cm3": 36.702,
+      "bbox_mm": [
+        134.0,
+        94.0,
+        11.0
+      ],
+      "bytes": 235084,
+      "watertight": true,
+      "manifold": true,
+      "oriented": true,
+      "ok": true
+    },
+    {
+      "name": "case_top",
+      "file": "stl/case_top.stl",
+      "qty": 1,
+      "material": "PETG or ABS",
+      "orientation": "Rotate 180 deg about X so the plate face is down. No supports.",
+      "notes": "Bezel + integrated 1.3 mm switch plate + raised Claude mark.",
+      "triangles": 7572,
+      "volume_mm3": 28830.17,
+      "volume_cm3": 28.83,
+      "bbox_mm": [
+        134.0,
+        94.0,
+        6.8
+      ],
+      "bytes": 378684,
+      "watertight": true,
+      "manifold": true,
+      "oriented": true,
+      "ok": true
+    },
+    {
+      "name": "keycap_agent",
+      "file": "stl/keycap_agent.stl",
+      "qty": 6,
+      "material": "Natural / clear ABS / PLA",
+      "orientation": "Upside down (open side up). No supports.",
+      "notes": "1.0 mm roof so the RGB status colour reads through.",
+      "triangles": 256,
+      "volume_mm3": 624.63,
+      "volume_cm3": 0.625,
+      "bbox_mm": [
+        17.5,
+        16.5,
+        5.6
+      ],
+      "bytes": 12884,
+      "watertight": true,
+      "manifold": true,
+      "oriented": true,
+      "ok": true
+    },
+    {
+      "name": "keycap_command",
+      "file": "stl/keycap_command.stl",
+      "qty": 7,
+      "material": "ABS / PLA",
+      "orientation": "Upside down (open side up). No supports.",
+      "notes": "Opaque command caps.",
+      "triangles": 256,
+      "volume_mm3": 692.47,
+      "volume_cm3": 0.692,
+      "bbox_mm": [
+        17.5,
+        16.5,
+        5.6
+      ],
+      "bytes": 12884,
+      "watertight": true,
+      "manifold": true,
+      "oriented": true,
+      "ok": true
+    },
+    {
+      "name": "knob",
+      "file": "stl/knob.stl",
+      "qty": 1,
+      "material": "PETG or ABS",
+      "orientation": "Bore down on the plate. No supports.",
+      "notes": "D-bore press fit onto the EC11 shaft.",
+      "triangles": 1738,
+      "volume_mm3": 7162.25,
+      "volume_cm3": 7.162,
+      "bbox_mm": [
+        26.0,
+        26.0,
+        15.0
+      ],
+      "bytes": 86984,
+      "watertight": true,
+      "manifold": true,
+      "oriented": true,
+      "ok": true
+    },
+    {
+      "name": "joystick_cap",
+      "file": "stl/joystick_cap.stl",
+      "qty": 1,
+      "material": "PETG or ABS",
+      "orientation": "Bore down on the plate. No supports.",
+      "notes": "Dished thumb cap.",
+      "triangles": 1872,
+      "volume_mm3": 2012.59,
+      "volume_cm3": 2.013,
+      "bbox_mm": [
+        20.0,
+        20.0,
+        8.0
+      ],
+      "bytes": 93684,
+      "watertight": true,
+      "manifold": true,
+      "oriented": true,
+      "ok": true
+    },
+    {
+      "name": "foot_rear",
+      "file": "stl/foot_rear.stl",
+      "qty": 2,
+      "material": "TPU (or PETG + rubber pad)",
+      "orientation": "Flat, sloped face up.",
+      "notes": "Gives the 6.0 deg typing tilt.",
+      "triangles": 12,
+      "volume_mm3": 2233.08,
+      "volume_cm3": 2.233,
+      "bbox_mm": [
+        16.0,
+        12.0,
+        12.26
+      ],
+      "bytes": 684,
+      "watertight": true,
+      "manifold": true,
+      "oriented": true,
+      "ok": true
+    },
+    {
+      "name": "foot_front",
+      "file": "stl/foot_front.stl",
+      "qty": 2,
+      "material": "TPU (or PETG + rubber pad)",
+      "orientation": "Flat, sloped face up.",
+      "notes": "Front pads.",
+      "triangles": 12,
+      "volume_mm3": 409.08,
+      "volume_cm3": 0.409,
+      "bbox_mm": [
+        16.0,
+        12.0,
+        2.76
+      ],
+      "bytes": 684,
+      "watertight": true,
+      "manifold": true,
+      "oriented": true,
+      "ok": true
+    },
+    {
+      "name": "diffuser",
+      "file": "stl/diffuser.stl",
+      "qty": 1,
+      "material": "Clear or natural PETG @ 10% infill",
+      "orientation": "Flat. No supports.",
+      "notes": "Touch-strip light guide; capacitive sensing reads through it.",
+      "triangles": 216,
+      "volume_mm3": 1687.34,
+      "volume_cm3": 1.687,
+      "bbox_mm": [
+        110.8,
+        8.4,
+        2.1
+      ],
+      "bytes": 10884,
+      "watertight": true,
+      "manifold": true,
+      "oriented": true,
+      "ok": true
+    }
+  ],
+  "ok": true,
+  "device": "Claude Micro",
+  "version": "1.0.0",
+  "totals": {
+    "printable_parts": 9,
+    "pieces_to_print": 22,
+    "triangles": 16634,
+    "solid_volume_cm3": 90.27,
+    "estimated_filament_g": 61.6,
+    "assembly_triangles": 23786
+  }
+}

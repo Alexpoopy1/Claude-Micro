@@ -1,0 +1,260 @@
+{
+  "$comment": "Claude Micro - single source of truth. All units mm unless noted. Consumed by tools/build_stl.py, tools/build_pcb.py, tools/build_html.py and the test suite.",
+  "meta": {
+    "name": "Claude Micro",
+    "slug": "claude-micro",
+    "version": "1.0.0",
+    "vendor": "Open Hardware",
+    "description": "13-key low-profile agent macropad with rotary reasoning dial, planar joystick, capacitive touch strip and 19-LED RGB chain.",
+    "usb": { "vid": "0xC1A0", "pid": "0x0001", "manufacturer": "Claude Micro", "product": "Claude Micro" },
+    "inspiration": "Layout and feature parity study of the Work Louder x OpenAI Codex Micro (13 switches, 1 encoder, 1 planar joystick, 1 touch sensor, 6 frosted agent keys)."
+  },
+
+  "layout": {
+    "pitch_x": 18.0,
+    "pitch_y": 17.0,
+    "switch": {
+      "type": "kailh_choc_v1",
+      "plate_cutout": 13.85,
+      "body_w": 15.0,
+      "body_d": 15.0,
+      "body_h": 5.0,
+      "stem_h": 3.0,
+      "travel": 3.0,
+      "plate_thickness": 1.3,
+      "top_of_plate_above_pcb": 2.2
+    },
+    "keycap": {
+      "w": 17.5,
+      "d": 16.5,
+      "h": 5.6,
+      "top_inset": 1.4,
+      "wall": 1.2,
+      "stem_pitch_x": 5.7,
+      "stem_w": 1.25,
+      "stem_d": 3.0,
+      "stem_h": 2.8
+    },
+
+    "keys": [
+      { "id": "A1", "x":  0.0, "y":  0.0, "group": "agent", "matrix": [0, 0], "legend": "AGENT 1", "fn": "Focus / raise thread 1" },
+      { "id": "A2", "x": 18.0, "y":  0.0, "group": "agent", "matrix": [0, 1], "legend": "AGENT 2", "fn": "Focus / raise thread 2" },
+      { "id": "A3", "x": 36.0, "y":  0.0, "group": "agent", "matrix": [0, 2], "legend": "AGENT 3", "fn": "Focus / raise thread 3" },
+      { "id": "A4", "x": 54.0, "y":  0.0, "group": "agent", "matrix": [0, 3], "legend": "AGENT 4", "fn": "Focus / raise thread 4" },
+      { "id": "A5", "x": 72.0, "y":  0.0, "group": "agent", "matrix": [1, 0], "legend": "AGENT 5", "fn": "Focus / raise thread 5" },
+      { "id": "A6", "x": 90.0, "y":  0.0, "group": "agent", "matrix": [1, 1], "legend": "AGENT 6", "fn": "Focus / raise thread 6" },
+
+      { "id": "K1", "x":  0.0, "y": 17.0, "group": "command", "matrix": [1, 2], "legend": "NEW",    "fn": "New thread" },
+      { "id": "K2", "x": 18.0, "y": 17.0, "group": "command", "matrix": [1, 3], "legend": "RUN",    "fn": "Run / send" },
+      { "id": "K3", "x": 36.0, "y": 17.0, "group": "command", "matrix": [2, 0], "legend": "STOP",   "fn": "Interrupt agent" },
+      { "id": "K4", "x": 54.0, "y": 17.0, "group": "command", "matrix": [2, 1], "legend": "DIFF",   "fn": "Show diff" },
+
+      { "id": "K5", "x":  0.0, "y": 34.0, "group": "command", "matrix": [2, 2], "legend": "PLAN",   "fn": "Toggle plan mode" },
+      { "id": "K6", "x": 18.0, "y": 34.0, "group": "command", "matrix": [2, 3], "legend": "TEST",   "fn": "Run tests" },
+      { "id": "K7", "x": 36.0, "y": 34.0, "group": "command", "matrix": [3, 0], "legend": "LAYER",  "fn": "Cycle layer" }
+    ],
+
+    "encoder": {
+      "id": "ENC1",
+      "x": 90.0, "y": 25.5,
+      "type": "EC11E",
+      "detents": 20,
+      "pulses_per_rev": 20,
+      "shaft_d": 6.0,
+      "shaft_flat": 4.5,
+      "shaft_len": 9.0,
+      "body_w": 12.0, "body_d": 12.0, "body_h": 6.5,
+      "knob_d": 26.0, "knob_h": 15.0,
+      "switch_matrix": [3, 1],
+      "fn": "Reasoning effort: low -> medium -> high -> max"
+    },
+
+    "joystick": {
+      "id": "JS1",
+      "x": 63.0, "y": 38.0,
+      "type": "planar_2axis_analog",
+      "body_w": 20.0, "body_d": 20.0, "body_h": 12.0,
+      "cap_d": 20.0, "cap_h": 8.0,
+      "throw_deg": 18.0,
+      "switch_pin": "GP22",
+      "fn": "Up/Down/Left/Right skill launcher (review PR, debug, refactor, tests)"
+    },
+
+    "touch_strip": {
+      "id": "TS1",
+      "x0": -9.0, "y0": 50.5, "x1": 99.0, "y1": 56.5,
+      "pads": 5,
+      "pad_gap": 1.2,
+      "sense": "RC charge-time on GP16..GP20 driven through 1 MOhm from GP21",
+      "fn": "Swipe to scroll agent transcript; tap to acknowledge"
+    },
+
+    "logo": {
+      "x": 45.0, "y": 61.5,
+      "size": 8.0,
+      "emboss": 0.6,
+      "mark": "claude_burst"
+    }
+  },
+
+  "rgb": {
+    "per_key": { "count": 13, "part": "SK6812MINI-E", "mount": "reverse", "offset_y": 4.7 },
+    "underglow": { "count": 6, "part": "SK6812-3535", "positions": [
+      [-11.0, 8.5], [ 33.0, -10.5], [ 96.0, 46.0], [ 96.0, 8.5], [ 12.0, 45.0], [ 63.0, 63.5]
+    ]},
+    "total": 19,
+    "max_current_ma_per_led": 60,
+    "firmware_current_limit_ma": 420,
+    "status_colors": {
+      "idle":     [ 255, 255, 255 ],
+      "thinking": [  60, 120, 255 ],
+      "running":  [ 120, 200, 255 ],
+      "waiting":  [ 255, 176,  32 ],
+      "done":     [  40, 210, 120 ],
+      "error":    [ 235,  60,  60 ]
+    }
+  },
+
+  "matrix": {
+    "rows": 4,
+    "cols": 4,
+    "diode_direction": "COL2ROW",
+    "row_pins": ["GP2", "GP3", "GP4", "GP5"],
+    "col_pins": ["GP6", "GP7", "GP8", "GP9"]
+  },
+
+  "module": {
+    "part": "RP2040 module, Raspberry Pi Pico form factor (40-pin castellated)",
+    "compatible": ["Raspberry Pi Pico", "Pico H", "RP2040-Plus", "YD-RP2040 (USB-C)", "Pico clone w/ USB-C"],
+    "recommended": "USB-C variant (YD-RP2040 / RP2040-Plus) so the finished unit has a USB-C port",
+    "x": 17.34, "y": 9.5, "rot": 0, "side": "bottom",
+    "$placement": "Pin columns land at x=8.45 and x=26.23, in the clear gutters between key columns, so the module's through-holes miss every top-side pad.",
+    "body_w": 21.0, "body_l": 51.0, "body_h": 4.0,
+    "mount": "2.54 mm pin header, component side facing away from the carrier",
+    "standoff": 2.5, "pcb_thickness": 1.0, "component_height": 2.6,
+    "$clearance": "The header lifts the module 2.5 mm off the carrier, so the diodes and 0603 caps it spans (0.9 mm tall) pass underneath.",
+    "pin_pitch": 2.54, "row_spacing": 17.78, "pins_per_side": 20,
+    "pinout": {
+      "1": "GP0", "2": "GP1", "3": "GND", "4": "GP2", "5": "GP3",
+      "6": "GP4", "7": "GP5", "8": "GND", "9": "GP6", "10": "GP7",
+      "11": "GP8", "12": "GP9", "13": "GND", "14": "GP10", "15": "GP11",
+      "16": "GP12", "17": "GP13", "18": "GND", "19": "GP14", "20": "GP15",
+      "21": "GP16", "22": "GP17", "23": "GND", "24": "GP18", "25": "GP19",
+      "26": "GP20", "27": "GP21", "28": "GND", "29": "GP22", "30": "RUN",
+      "31": "GP26_A0", "32": "GP27_A1", "33": "AGND", "34": "GP28_A2",
+      "35": "ADC_VREF", "36": "3V3_OUT", "37": "3V3_EN", "38": "GND",
+      "39": "VSYS", "40": "VBUS"
+    }
+  },
+
+  "pins": {
+    "mcu": "RP2040 (Pico-form-factor module)",
+    "encoder_a": "GP10",
+    "encoder_b": "GP11",
+    "led_data": "GP12",
+    "touch_drive": "GP21",
+    "touch_sense": ["GP16", "GP17", "GP18", "GP19", "GP20"],
+    "joy_x": "GP26",
+    "joy_y": "GP27",
+    "reset": "RUN"
+  },
+
+  "pcb": {
+    "x0": -17.0, "y0": -16.0, "x1": 111.0, "y1": 72.0,
+    "corner_radius": 4.0,
+    "thickness": 1.6,
+    "layers": 2,
+    "copper_oz": 1,
+    "finish": "ENIG",
+    "soldermask": "black",
+    "silkscreen": "white",
+    "mount_holes": [
+      { "x": -13.8, "y": -13.4, "d": 2.6 },
+      { "x":  47.0, "y": -13.4, "d": 2.6 },
+      { "x": 107.8, "y": -13.4, "d": 2.6 },
+      { "x": -13.8, "y":  68.8, "d": 2.6 },
+      { "x":  47.0, "y":  68.8, "d": 2.6 },
+      { "x": 107.8, "y":  68.8, "d": 2.6 }
+    ],
+    "usb": { "x": 17.34, "y": -16.0, "edge": "back", "width": 9.5, "note": "Aligned with the USB connector on the RP2040 module." },
+    "design_rules": {
+      "min_track": 0.2,
+      "min_clearance": 0.2,
+      "min_via_drill": 0.3,
+      "min_via_diameter": 0.6,
+      "min_annular_ring": 0.13,
+      "min_hole_to_hole": 0.5,
+      "min_silk_to_mask": 0.15,
+      "edge_clearance": 0.3
+    }
+  },
+
+  "stack": {
+    "$comment": "Z levels in mm from the desk surface (z=0 is the underside of the case). The 6.5 mm cavity takes the MCU module on a 2.5 mm header standoff, which clears the 0.9 mm bottom-side parts it spans.",
+    "case_floor_bottom": 0.0,
+    "case_floor_top": 2.0,
+    "component_clearance_top": 8.5,
+    "pcb_bottom": 8.5,
+    "pcb_top": 10.1,
+    "plate_bottom": 11.0,
+    "plate_top": 12.3,
+    "switch_top": 15.1,
+    "keycap_bottom": 15.4,
+    "keycap_top": 21.0,
+    "bezel_top": 16.4,
+    "knob_bottom": 13.1,
+    "knob_top": 28.1,
+    "joy_cap_bottom": 20.3,
+    "joy_cap_top": 28.3
+  },
+
+  "case": {
+    "wall": 2.4,
+    "floor": 2.0,
+    "pcb_gap": 0.35,
+    "outer": { "x0": -20.0, "y0": -19.0, "x1": 114.0, "y1": 75.0 },
+    "window": { "x0": -9.8, "y0": -9.8, "x1": 104.8, "y1": 66.5, "radius": 3.0 },
+    "bottom_cavity_h": 8.0,
+    "bezel_h": 6.4,
+    "top_lip": 1.6,
+    "corner_radius": 5.5,
+    "screw": { "type": "M2", "clearance_d": 2.2, "head_d": 4.0, "head_h": 1.6, "boss_d": 5.4, "insert_d": 3.2, "insert_h": 4.0 },
+    "foot": { "w": 16.0, "d": 12.0, "h_front": 1.5, "h_rear": 11.0, "tilt_deg": 6.0 },
+    "print": {
+      "nozzle": 0.4,
+      "layer_height": 0.2,
+      "walls": 3,
+      "infill_pct": 25,
+      "material_case": "PETG or ABS",
+      "material_keycap": "ABS / PLA",
+      "material_diffuser": "Clear or natural PETG @ 10% infill"
+    }
+  },
+
+  "colors": {
+    "case_bottom": "#2b2f36",
+    "case_top": "#3a3f48",
+    "plate": "#1d2026",
+    "keycap_agent": "#e8e6df",
+    "keycap_command": "#20242b",
+    "keycap_accent": "#d97757",
+    "pcb": "#1a1d22",
+    "copper": "#c98d52",
+    "silk": "#e9eef5",
+    "knob": "#d97757",
+    "joystick": "#c8ccd4",
+    "diffuser": "#f2efe9",
+    "switch": "#e0e0e0",
+    "switch_stem": "#d97757",
+    "accent": "#d97757"
+  },
+
+  "layers": [
+    { "n": 0, "name": "BASE",     "desc": "Agent focus + core Claude Code commands" },
+    { "n": 1, "name": "REVIEW",   "desc": "Diff / hunk navigation, accept, reject" },
+    { "n": 2, "name": "GIT",      "desc": "Stage, commit, push, PR" },
+    { "n": 3, "name": "TERMINAL", "desc": "Pane + process control" },
+    { "n": 4, "name": "MEDIA",    "desc": "System volume + transport" },
+    { "n": 5, "name": "CONFIG",   "desc": "RGB, brightness, reset, bootloader" }
+  ]
+}
