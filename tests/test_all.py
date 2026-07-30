@@ -521,6 +521,109 @@ def test_bom_and_placement_cover_every_component():
         assert p["Side"] in ("Top", "Bottom")
 
 
+def test_easyeda_export_is_well_formed():
+    """Shape strings must match EasyEDA's documented field orders exactly, and
+    every id must be unique -- EasyEDA silently drops shapes otherwise."""
+    import build_easyeda
+    path = build_easyeda.build(verbose=False)
+    doc = json.load(open(path))
+
+    assert doc["docType"] == 5 and len(doc["schematics"]) == 1
+    data = doc["schematics"][0]["dataStr"]
+    assert set(data) >= {"head", "canvas", "shape", "BBox", "colors"}
+    assert data["head"]["docType"] == "1"
+    assert data["canvas"].startswith("CA~")
+    assert len(data["canvas"].split("~")) == 15
+
+    fields = {"W": 7, "N": 12, "T": 16, "R": 12}
+    for s in data["shape"]:
+        kind = s.split("~")[0]
+        if kind in fields:
+            assert len(s.split("~")) == fields[kind], f"bad {kind}: {s[:80]}"
+        elif kind == "LIB":
+            head, *children = s.split("#@$")
+            assert len(head.split("~")) == 7, f"bad LIB header: {head[:80]}"
+            assert children, "LIB with no child shapes"
+            for ch in children:
+                ck = ch.split("~")[0]
+                if ck == "P":
+                    assert len(ch.split("^^")) == 7, f"bad pin: {ch[:80]}"
+                elif ck in fields:
+                    assert len(ch.split("~")) == fields[ck], f"bad {ck}: {ch[:80]}"
+        else:
+            raise AssertionError(f"unexpected shape type {kind}")
+
+    ids = [t for s in data["shape"]
+           for t in s.replace("#@$", "~").replace("^^", "~").split("~")
+           if t.startswith("gge")]
+    assert len(ids) == len(set(ids)), "duplicate gge ids"
+
+
+def test_easyeda_export_has_the_same_netlist():
+    """Rebuild connectivity from the exported file the way EasyEDA does --
+    pin dot to wire to net label -- and compare it against the source netlist."""
+    import build_easyeda
+    from collections import defaultdict
+    doc = json.load(open(build_easyeda.build(verbose=False)))
+    shapes = doc["schematics"][0]["dataStr"]["shape"]
+
+    pins, wires, labels = {}, defaultdict(set), {}
+    for s in shapes:
+        if s.startswith("W~"):
+            c = [float(v) for v in s.split("~")[1].split()]
+            a, b = (c[0], c[1]), (c[2], c[3])
+            wires[a].add(b)
+            wires[b].add(a)
+        elif s.startswith("N~"):
+            f = s.split("~")
+            labels[(float(f[1]), float(f[2]))] = f[5]
+        elif s.startswith("LIB"):
+            parts = s.split("#@$")
+            ref = next(p.split("~")[12] for p in parts if p.startswith("T~P~"))
+            for ch in parts:
+                if ch.startswith("P~"):
+                    seg = ch.split("^^")
+                    x, y = seg[1].split("~")
+                    pins[(float(x), float(y))] = (ref, seg[0].split("~")[3])
+
+    recovered = defaultdict(set)
+    unlabelled = []
+    for pt, node in pins.items():
+        seen, stack, found = {pt}, [pt], None
+        while stack:
+            p = stack.pop()
+            if p in labels:
+                found = labels[p]
+                break
+            for q in wires.get(p, ()):
+                if q not in seen:
+                    seen.add(q)
+                    stack.append(q)
+        (recovered[found].add(node) if found else unlabelled.append(node))
+
+    net = circuit.build_netlist(CFG)
+    expected = defaultdict(set)
+    for c in net["components"]:
+        for pin, n in c["pins"].items():
+            if n:
+                expected[n].add((c["ref"], pin))
+
+    assert set(recovered) == set(expected), (
+        f"net mismatch: missing {set(expected) - set(recovered)}, "
+        f"extra {set(recovered) - set(expected)}")
+    for name in expected:
+        assert recovered[name] == expected[name], (
+            f"net {name} differs: {expected[name] ^ recovered[name]}")
+
+    # Only genuinely no-connect pins may lack a label.
+    allowed = {("MOD1", "37"), ("MOD1", "39"), ("U2", "3")}
+    assert set(unlabelled) <= allowed, f"unlabelled pins: {set(unlabelled) - allowed}"
+
+    total_pads = sum(len(circuit.pad_positions(c, net["footprints"]))
+                     for c in net["components"])
+    assert len(pins) == total_pads, f"{len(pins)} pins exported, {total_pads} pads exist"
+
+
 def test_viewer_is_self_contained():
     html_path = os.path.join(BUILD, "claude-micro.html")
     if not os.path.exists(html_path):

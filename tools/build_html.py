@@ -667,7 +667,10 @@ function hoverPCB(e){
 BUILD.schem = pane => {
   const d=el('div','pad'); d.style.maxWidth='none';
   d.innerHTML = '<h2>Schematic</h2><p>Functional schematic generated from the same netlist that '+
-    'drives the PCB and the KiCad export - if it is on this sheet, it is on the board.</p>'+
+    'drives the PCB and the KiCad export - if it is on this sheet, it is on the board. '+
+    'The same netlist is also exported as <span class="mono">pcb/claude-micro-easyeda.json</span>, '+
+    'which opens in EasyEDA (File &rarr; Open &rarr; EasyEDA) and imports into EasyEDA Pro '+
+    'via File &rarr; Import &rarr; EasyEDA Standard.</p>'+
     document.getElementById('schemsrc').innerHTML +
     '<div class="legend">'+
     '<span><i style="background:#d97757"></i>power</span>'+

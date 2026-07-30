@@ -3,6 +3,7 @@
 #   make            build all outputs and verify them
 #   make stl        printable parts only
 #   make pcb        route the board, write KiCad + gerbers + drill + BOM
+#   make easyeda    export the schematic as an EasyEDA source file
 #   make html       the single-file viewer
 #   make test       the full verification suite
 #   make clean      remove build/
@@ -11,9 +12,9 @@ PY      ?= python3
 TOOLS    = tools
 BUILD    = build
 
-.PHONY: all stl pcb firmware html test clean check dist
+.PHONY: all stl pcb easyeda firmware html test clean check dist
 
-all: stl pcb html test
+all: stl pcb easyeda html test
 
 stl:
 	@echo "== printable parts"
@@ -23,11 +24,15 @@ pcb:
 	@echo "== board: place, route, pour, check"
 	@$(PY) $(TOOLS)/build_pcb.py
 
+easyeda:
+	@echo "== EasyEDA schematic"
+	@$(PY) $(TOOLS)/build_easyeda.py
+
 firmware:
 	@echo "== firmware descriptors"
 	@$(PY) $(TOOLS)/build_firmware.py
 
-html: stl pcb
+html: stl pcb easyeda
 	@echo "== viewer"
 	@$(PY) $(TOOLS)/build_html.py
 

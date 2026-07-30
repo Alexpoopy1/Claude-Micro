@@ -28,6 +28,7 @@ above, so the deployed page is always generated fresh from
 | **Interactive viewer** | `build/claude-micro.html` | One self-contained file: WebGL model with an exploded-view slider, PCB layer viewer, schematic, BOM, print guide, firmware reference and the full check report. No network, no CDN. |
 | **Printable parts** | `build/stl/*.stl` | 9 parts, 22 pieces, ~62 g of filament. Every one proven watertight before it is written. |
 | **PCB** | `build/pcb/claude-micro.kicad_pcb` | Open in KiCad 7/8. Placed, routed, poured, zoned. Also `.kicad_sch`, `.kicad_pro`, `.net`. |
+| **EasyEDA schematic** | `build/pcb/claude-micro-easyeda.json` | `make easyeda`. Opens in EasyEDA (File → Open → EasyEDA) and imports into EasyEDA Pro via File → Import → EasyEDA Standard — for publishing to OSHWLab or ordering through JLCPCB. |
 | **Fabrication** | `build/pcb/gerbers/` | RS-274X gerbers for all nine layers plus separate plated and non-plated Excellon drill files. Upload as-is. |
 | **Assembly** | `build/pcb/bom.csv`, `positions.csv` | 18 BOM lines, 89 components, pick-and-place positions. |
 | **Firmware** | `firmware/qmk/claude_micro/` | Drop-in QMK keyboard folder. |
@@ -86,6 +87,7 @@ tools/  device.py       loader + derived layout (LED chain, matrix nodes, pads)
         outputs.py      KiCad, gerbers, Excellon, BOM, board.json
         checks.py       ERC + DRC + mechanical fit
         schematic.py    SVG schematic
+        build_easyeda.py   schematic → EasyEDA Standard source
         build_stl.py    printable parts → binary STL
         build_html.py   the single-file viewer
         build_firmware.py  QMK descriptors
@@ -135,6 +137,10 @@ the fixer and the checker cannot drift apart.
   and Excellon, drill counts matching the board, the BOM covering every
   component, the viewer free of external references, and the firmware agreeing
   with the config on pins, LED count, layers and layout size.
+* **EasyEDA** — every shape string matching EasyEDA's documented field order,
+  no duplicate ids, and the connectivity rebuilt out of the exported file the
+  way EasyEDA reads it — pin dot → wire → net label — coming back identical to
+  the source netlist, all 265 pads and 68 nets.
 
 Current status: **0 DRC errors, 0 warnings, 141/141 connections routed, 9/9
 meshes watertight.**

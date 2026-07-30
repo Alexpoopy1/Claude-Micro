@@ -1,5 +1,5 @@
 {
-  "buildCommand": "python3 tools/build_stl.py && python3 tools/build_pcb.py && python3 tools/build_html.py",
+  "buildCommand": "python3 tools/build_stl.py && python3 tools/build_pcb.py && python3 tools/build_easyeda.py && python3 tools/build_html.py",
   "outputDirectory": "build",
   "rewrites": [
     { "source": "/", "destination": "/claude-micro.html" }
